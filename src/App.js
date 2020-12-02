@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Component1 from './components/Component1';
+import Component2 from './components/Component2';
+import Component3 from './components/Component3';
+import ListShortCuts from './components/ListShortCuts';
+import styled from 'styled-components';
+import { KeyboardShortcutsProvider }  from './lib/KeyboardShortcutsContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <AppContainer>
+            <KeyboardShortcutsProvider>
+                <Component1 />
+                <Component2 />
+                <Component3 />
+                <ListShortCuts />
+            </KeyboardShortcutsProvider>
+        </AppContainer>
+    );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+`
