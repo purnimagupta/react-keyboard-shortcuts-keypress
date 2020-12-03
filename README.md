@@ -2,48 +2,90 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Instructions of usage:
 
-This keyboard binding provides 3 APIs - KeyboardShortcutsProvider, withKeyboardShortcuts, KeyboardShortcutsListener.
+The fastest way to start using shortcuts in your React application is by importing the `KeyboardShortcutsListener` in your component, like this:
 
-1.  `KeyboardShortcutsProvider` Context Provider Component
+> WIP: npm module `react-keyboard-shortcuts-keypress`
 
-    To be able to display Active Shortcuts available, we will wrap our components inside Component `KeyboardShortcutsProvider`. It will store the active shortcuts in the state.
+Install the library by running `npm install react-keyboard-shortcuts-keypress`
+
+```
+import React from 'react';
+import KeyboardShortcutsListener from 'react-keyboard-shortcuts-keypress'; 
+
+function MyComponent() {
+    const doSomething = () => {
+        // Do something here when shortcut is trigerred, like set a state value, or make a fetch request 
+    }
+    return (
+        <>
+            <KeyboardShortcutsListener
+                keysShortcuts="shift a"
+                callback={doSomething} 
+                description="Does something"
+            />
+                {
+                    /* Rest of your component */
+                }
+        </>
+    )
+}
+
+```
+
+check the [Keypress documentation](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L761) to see the complete list of supported keys.
+
+
+## Available APIs
+
+This keyboard binding provides 3 APIs - KeyboardShortcutsListener, KeyboardShortcutsProvider, withKeyboardShortcuts.
+
+1. `KeyboardShortcutsListener`
+Refer above example
+
+2.  `KeyboardShortcutsProvider` Context Provider Component
+
+Once you attach `KeyboardShortcutsListener` within your component code, you can wrap them within the `KeyboardShortcutsProvider` provider, like this:
+
+```
+import React from 'React';
+import MyComponent from './MyComponent'
+import { KeyboardShortcutsProvider }  from 'react-keyboard-shortcuts-keypress';
+
+function App() {
+    return (
+        <>
+            <KeyboardShortcutsProvider>
+                <MyComponent />
+            </KeyboardShortcutsProvider>
+        </>
+    );
+}
+
+```
+
+This will make the details of the configured shortcut listeners along with their descriptions available in the React Context provider, inside `keysShortcuts`.
+
+Other components can then access `keysShortcuts` as long as they are wrapped within `<KeyboardShortcutsProvider>`
+
+3. Higher Order Component `withKeyboardShortcuts`
+
+    To be able to access state data from Context Provider we can wrap our custom component inside HOC component `withKeyboardShortcuts`. It will return an array of objects which can 
+    be used to display all available keysShortcuts to the user.
 
     Ex: 
 
     ```
-        import { KeyboardShortcutsProvider }  from './lib/KeyboardShortcutsContext';
-        ....
-        ....
-        function App() {
-            return (
-                <AppContainer>
-                    <KeyboardShortcutsProvider>
-                        <Component1 />
-                        <Component2 />
-                        <Component3 />
-                        <ListShortCuts />
-                    </KeyboardShortcutsProvider>
-                </AppContainer>
-            );
-        }
-
-    ```
-2. Higher Order Component `withKeyboardShortcuts`
-
-    This HOC enables your component to get all the keyboardshortcutKeys.
-
-    Ex: 
-
-    ```import { withKeyboardShortcuts } from 'react-binding-with-keypress';
+    import React from 'react';
+    import { withKeyboardShortcuts } from 'react-keyboard-shortcuts-keypress';
     
-    function Compoent() {
-        <!-- This will give us keyboardShortcuts which is a array of objects and can be accessed via props.keyboardShortcuts -->
+    function DisplayAvailableKeysShortcuts() {
+        <!-- This will give us keyboardShortcuts which is a array of objects and can be accessed via props.keysShortcuts -->
         return(
             <div>
                 {
-                    props.keyboardShortcuts.map((shortcut) => (
+                    props.keysShortcuts.map((shortcut) => (
                         // display data or do sth
                     ))
                 }
@@ -52,33 +94,4 @@ This keyboard binding provides 3 APIs - KeyboardShortcutsProvider, withKeyboardS
     }
 
     export default withKeyboardShortcuts(Component);
-     ```
-
-3.  KeyboardShortcut Component `KeyboardShortcuts`
-
-    ```
-    import KeyboardShortcutsListener from '../lib/KeyboardShortcutsListener';
-    ```
-
-    This component expects `keysShortcuts`, `callback`, `description` props.
-
-    Ex:
-
-    ```
-    function Component2() {
-        const [color, setColor] = React.useState('#6b6bcd');
-        const turnGreen = () => {
-            setColor(color => color === '#6b6bcd' ? 'green' : '#6b6bcd');;
-        }
-        return (
-            <StyledComponent color={color}>
-                <KeyboardShortcutsListener 
-                    keysShortcuts="alt ctrl c" 
-                    callback={turnGreen} 
-                    description="Changes Component 2 color to Green" 
-                />
-                Component2
-            </StyledComponent>
-        )
-    }
     ```

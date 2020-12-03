@@ -8,27 +8,28 @@ function KeyboardShortcutsListener(props) {
     // This will expect shortcut keys and a callback, and description of it
     const { keysShortcuts, callback, description } = props;
     console.log("keysShortcuts", keysShortcuts);
-    const { setKeysShortcuts } = useContext(KeyboardShortcutsContext)
+    const { setKeysShortcuts } = useContext(KeyboardShortcutsContext);
+    
     useEffect(() => {
-        const comboID = listener.simple_combo(keysShortcuts, callback);
-        console.log("comboId", comboID)
+        const keysShortCutsID = listener.simple_combo(keysShortcuts, callback);
+        console.log("keysShortCutsID", keysShortCutsID)
         setKeysShortcuts(
             keyboardShortcuts => 
             [
                 ...keyboardShortcuts, 
                 {
-                  keyboardShortcuts: keysShortcuts,
-                  description,
-                  comboID
+                    keysShortcuts,
+                    description,
+                    keysShortCutsID
                 }
             ]
         );
 
         return () => {
-            listener.unregister_combo(comboID)
+            listener.unregister_combo(keysShortCutsID)
             setKeysShortcuts((keyboardShortcuts) => 
                 { 
-                    return keyboardShortcuts.filter(kbCombo => kbCombo.comboID !== comboID)
+                    return keyboardShortcuts.filter(kbCombo => kbCombo.keysShortCutsID !== keysShortCutsID)
                 }
             )
         }

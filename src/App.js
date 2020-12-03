@@ -2,7 +2,7 @@ import React from 'react';
 import Component1 from './components/Component1';
 import Component2 from './components/Component2';
 import Component3 from './components/Component3';
-import ListShortCuts from './components/ListShortCuts';
+import DisplayAvailableKeysShortcuts from './components/DisplayAvailableKeysShortcuts';
 import styled from 'styled-components';
 import { KeyboardShortcutsProvider }  from './lib/KeyboardShortcutsContext';
 
@@ -13,7 +13,7 @@ function App() {
                 <Component1 />
                 <Component2 />
                 <Component3 />
-                <ListShortCuts />
+                <DisplayAvailableKeysShortcuts />
             </KeyboardShortcutsProvider>
         </AppContainer>
     );
@@ -22,6 +22,8 @@ function App() {
 export default App;
 
 const AppContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, auto);
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 20px;
+    margin: 10px;
 `

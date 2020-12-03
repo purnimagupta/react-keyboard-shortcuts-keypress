@@ -1,14 +1,14 @@
 import React from 'react';
 
 export const KeyboardShortcutsContext = React.createContext({
-    keysShortCuts: [],
+    keysShortcuts: [],
     setKeysShortcuts: () => {},
 });
 
 export const KeyboardShortcutsProvider = (props) => {
-    const [keysShortCuts, setKeysShortcuts ] = React.useState([]);
+    const [keysShortcuts, setKeysShortcuts ] = React.useState([]);
     return(
-        <KeyboardShortcutsContext.Provider value={{keysShortCuts, setKeysShortcuts}}>
+        <KeyboardShortcutsContext.Provider value={{keysShortcuts, setKeysShortcuts}}>
             {props.children}
         </KeyboardShortcutsContext.Provider>
     )

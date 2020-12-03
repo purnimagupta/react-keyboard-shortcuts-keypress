@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import KeyboardShortcutsListener from '../lib/KeyboardShortcutsListener';
 
-function Component1() {
+function Component1(props) {
     const [color, setColor] = React.useState('#8f8fcb');
     const turnRed = () => {
         setColor(color => color === '#8f8fcb' ? 'red' : '#8f8fcb');
@@ -27,4 +27,6 @@ const StyledComponent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
 `
